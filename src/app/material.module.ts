@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 // imports for Angular materials
 const MATERIAL = [
@@ -21,7 +22,8 @@ const MATERIAL = [
   MatToolbarModule,
   MatDividerModule,
   MatRadioModule,
-  MatIconModule
+  MatIconModule,
+  MatCheckboxModule
 ];
 
 @NgModule (

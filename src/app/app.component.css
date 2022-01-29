@@ -2,3 +2,28 @@
   font-size: larger;
   font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
+label {
+  font-weight: bold;
+}
+
+.beige-box{
+  background-color: antiquewhite;
+}
+
+h3 {
+  font-size: larger;
+  font-weight: bold;
+}
+
+h2 {
+  text-align: center;
+}
+
+.todolist {
+  background-color:lightyellow
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: green;
+}

@@ -4,7 +4,7 @@ export class Todo {  // declare variables needed for this app
     public priority: string,
     public dueDate: Date,
     public taskId: string,
-    public status?: boolean
+    public status: boolean
   ) {
 
   }

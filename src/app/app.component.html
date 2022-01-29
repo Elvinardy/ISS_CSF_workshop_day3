@@ -5,71 +5,91 @@
 </mat-toolbar>
 
 <div class="content">
-  <div fxFlexFill fxLayout="row wrap"
+  <div fxFlexFill fxLayout="column wrap"
   fxLayout.xs="column wrap"
   fxLayout.sm="column wrap"
+  fxLayout.lg="column wrap"
   fxLayoutGap="15px grid">
-    <div>
+    <div fxLayoutAlign="center" class="beige-box">
       <form [formGroup]="form" (ngSubmit)="addTodo()"
        #formDirective="ngForm">  <!--Directive is needed to do more with the form-->
-        <mat-card>    <!--declare a card for a section-->
+        <mat-card fxFlexAlign="stretch">    <!--declare a card for a section-->
           <mat-card-header>
             <mat-card-title>
-              Add ToDo
+              Add your ToDo list here
             </mat-card-title>
-            <mat-card-title>
+            <!-- <mat-card-title>
               Edit ToDo
-            </mat-card-title>
+            </mat-card-title> -->
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
               <input matInput formControlName="task"/>
             </mat-form-field>
             <div>
-              <label>Priority</label>
+              <label>Priority : </label>
               <mat-radio-group aria-label="select an option"
               formControlName="priority">
-                <mat-radio-button *ngFor="let p of priorities" value="{{p}}">
-                  {{p}} &nbsp;
+                <mat-radio-button *ngFor="let p of priorities"
+                value="{{ p }}">{{p}} &nbsp;
                 </mat-radio-button>
               </mat-radio-group>
             </div>
             <mat-form-field>
               <input matInput [matDatepicker]="picker"
               formControlName="dueDate" [min]="tomorrow"/>
+              <mat-hint *ngIf="form.invalid">
+                Please enter a valid task and due date</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker">
                 <mat-datepicker #picker></mat-datepicker>
-
               </mat-datepicker-toggle>
             </mat-form-field>
             <div>
               <!--add buttons-->
-
-              <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">Add</button>
-              <button mat-raised-button color="warn" type="button">Update</button>
+              <button mat-raised-button color="accent" type="submit"
+              [disabled]="form.invalid">Add</button>
+              <button mat-raised-button color="warn"
+               type="submit" [disabled]="form.invalid" (click)="updateTodo()">Update</button>
               <br>
-              <mat-hint *ngIf="form.invalid">
-                Please enter a valid task and due date</mat-hint>
             </div>
           </mat-card-content>
-          <mat-card>
+        </mat-card>
+        <hr>
+          <mat-card class="todolist">
             <mat-card-header>
-              My ToDo List
+              <h2>Current ToDo List</h2>
             </mat-card-header>
+            <mat-hint *ngIf="form.invalid">
+              Click on the checkbox once your task is done</mat-hint>
             <mat-card-content>
               <mat-list>
-              <mat-action-list *ngFor="let t of todosValues">
-                <ul class="tasks"> <!--display list of task at the webpage-->
-                  <li><{{t.task}} - {{t.dueDate | date:"dd/MM/yyyy"}} - {{t.priority}}
-                    <button mat-icon-button color="primary" aria-label="edit"></button>
+              <mat-action-list *ngFor="let t of todosValues; index as i">
+                <div class="tasks">
+
+                  <!--display list of task at the webpage-->
+                  <span>
+
+                    <span [ngClass]="{ strikethrough: t.status === true }">
+                    <h3>{{ t.task }}</h3>
+                    <mat-checkbox
+                    fxFlexAlign="start"
+                    [checked]="t.status"
+                    (change)="t.status = !t.status;"
+                    ></mat-checkbox>
+                    {{ t.dueDate | date:"dd/MM/yyyy" }} - {{ t.priority }}
+                    </span>
+                    <button mat-icon-button color="primary" type="button" aria-label="delete" (click)="editTodo(i)" >
                       <mat-icon>edit</mat-icon>
-                      <button mat-icon-button color="primary" aria-label="done"></button>
-                      <mat-icon>done</mat-icon>/li>
-                </ul>
+                    </button>
+                    <button mat-mini-fab color="warn" type="button" aria-label="delete" (click)="removeTodo(t)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    </span>
+                  </div>
               </mat-action-list>
             </mat-list>
             </mat-card-content>
-          </mat-card>
+
         </mat-card>
       </form>
     </div>
